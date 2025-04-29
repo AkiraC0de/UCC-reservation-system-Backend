@@ -6,7 +6,7 @@ const app = express();
 app.use(express.json());
 
 
-app.listen(process.env.PORT, () => {
-    database.connectToDatabase();
+app.listen(process.env.PORT, async () => {
+    await database.connectToDatabase();
     console.log('server is running at PORT: ', process.env.PORT)
 })
