@@ -12,9 +12,9 @@ const client = new MongoClient(process.env.URI, {
 let database;
 
 module.exports = {
-    connectToDatabase: async () => {
+    connectToDatabase: () => {
         try {
-            database = await client.db('ucc-reservation');
+            database = client.db('ucc-reservation');
             console.log(" You successfully connected to MongoDB!");
         } catch (error) {
             console.error("Error message: ", error.message);
