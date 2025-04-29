@@ -22,9 +22,9 @@ This backend is a part of a full-stack web application and is my first attempt a
 
 ## 🧠 What I’m Learning
 - How to structure a backend project
--Managing routes, controllers, and models
--Connecting and interacting with MongoDB
--Using environment variables for secure development
--RESTful API design
+- Managing routes, controllers, and models
+- Connecting and interacting with MongoDB
+- Using environment variables for secure development
+- RESTful API design
 
 
