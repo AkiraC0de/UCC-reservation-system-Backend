@@ -34,8 +34,47 @@ reservationRoute.get('/', async (req, res) => {
     
 })  
 
+// #2 POST 
+// post a new reservation 
+reservationRoute.post('/', async (req, res) => {
+    const db = database.getDb();
+    
+    try {
+        const dataNow = new Date().toISOString();
+        const user = req.body.user || {};
 
-//#2 PUT
+        const mongoObject = {
+            roomId: req.body.roomId || "",
+            date: req.body.date || "",
+            startTime: req.body.startTime || "",
+            endTime: req.body.endTime || "",
+            status: req.body.status || "pending",
+            purpose: req.body.purpose || "",
+            user: {
+                userId: user.user_id || "",
+                firstname: user.username || "",
+                lastname: user.lastname || "",
+                program: user.program || "",
+                year: user.year || 1,
+                section: user.section || ""
+            },
+            createdAt: dataNow,
+            updateAt: dataNow,
+        };
+
+        const data = await db.collection('reservations').insertOne(mongoObject);
+        res.status(201).json({
+            message: `The Reservation ${req.params.id} has been created.`, 
+            data: data
+        })
+
+    } catch (error) {
+        res.status(500).json({message: `Server Error: Reservation ${req.params.id} cannot be sent.`})
+    }
+})
+
+
+//#3 PUT
 // Update one reservation data
 reservationRoute.put('/:id', async (req, res) => {
     const db = database.getDb();
@@ -83,6 +122,8 @@ reservationRoute.put('/:id', async (req, res) => {
     }
 
 
-} )
+} );
+
+
 
 module.exports = reservationRoute;
