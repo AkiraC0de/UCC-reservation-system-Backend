@@ -64,12 +64,16 @@ reservationRoute.post('/', async (req, res) => {
 
         const data = await db.collection('reservations').insertOne(mongoObject);
         res.status(201).json({
+            success: true,
             message: `The Reservation ${req.params.id} has been created.`, 
             data: data
         })
 
     } catch (error) {
-        res.status(500).json({message: `Server Error: Reservation ${req.params.id} cannot be sent.`})
+        res.status(500).json({
+            success: false,
+            message: `Server Error: Reservation ${req.params.id} cannot be sent.`
+        })
     }
 })
 
@@ -84,6 +88,7 @@ reservationRoute.put('/:id', async (req, res) => {
 
         if(!findData) {
             return res.status(404).json({
+                success: false,
                 message: `The Reservation ${req.params.id}} is not existed`
             })
         }
@@ -113,16 +118,45 @@ reservationRoute.put('/:id', async (req, res) => {
 
         const data = await db.collection('reservations').updateOne({_id: new ObjectId(req.params.id)}, mongoObject);
         res.status(200).json({
+            success: true,
             message: `The Reservation ${req.params.id} has been updated.`, 
             data: data
         })
 
     } catch (error) {
-        res.status(500).json({message: `Server Error: Reservation ${req.params.id} cannot be updated.`})
+        res.status(500).json({
+            success: false,
+            message: `Server Error: Reservation ${req.params.id} cannot be updated.`,
+            data
+        })
     }
 
 
 } );
+
+reservationRoute.delete('/:id', async (req, res) => {
+    const db = database.getDb();
+    try {
+        const findData = await db.collection('reservations').findOne({_id: new ObjectId(req.params.id)});
+
+        if(!findData){
+            return res.status(404).json({
+                success: false,
+                message: `The Reservation ${req.params.id} is not existed` 
+        })
+        }
+
+        const data = await db.collection("reservations").deleteOne({_id: new ObjectId(req.params.id)})
+        res.status(200).json({
+            success: true,
+            message: `The reservation ${req.params.id} has been deleted`,
+            data
+        })
+    } catch (error) {
+        res.status(500).json({message: `Server Error: Reservation ${req.params.id} cannot be deleted.`, data})
+    }
+})
+
 
 
 
