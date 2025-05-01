@@ -149,4 +149,9 @@ const reservationDeleteController = async (req, res) => {
     }
 }
 
-module.exports = { reservationGetController, reservationPostController, reservationPutController, reservationDeleteController };
+module.exports = { 
+    reservationGetController, 
+    reservationPostController, 
+    reservationPutController,
+    reservationDeleteController 
+};
