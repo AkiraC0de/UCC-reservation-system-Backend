@@ -56,11 +56,11 @@ const reservationPostController = async (req, res, next) => {
             updateAt: dataNow,
         };
 
-        const data = await db.collection('reservations').insertOne(mongoObject);
+        //const data = await db.collection('reservations').insertOne(mongoObject);
         res.status(201).json({
             success: true,
             message: `The Reservation ${req.params.id} has been created.`, 
-            data: data
+            data: mongoObject
         })
 
     } catch (error) {
