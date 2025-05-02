@@ -46,7 +46,7 @@ const reservationPostController = async (req, res, next) => {
             purpose: req.body.purpose || "",
             user: {
                 userId: user.user_id || "",
-                firstname: user.username || "",
+                firstname: user.firstname || "",
                 lastname: user.lastname || "",
                 program: user.program || "",
                 year: user.year || 1,
