@@ -7,7 +7,9 @@ const {
     reservationPostController, 
     reservationPutController, 
     reservationDeleteController 
-} = require('../controllers/reservation.controllers')
+} = require('../controllers/reservation.controllers');
+
+const { sanitizeReservation } = require('../middlewares/sanitizeReservation')
 
 const reservationRoute = express.Router();
 
@@ -17,7 +19,7 @@ reservationRoute.get('/', reservationGetController)
 
 // #2 POST 
 // post a new reservation 
-reservationRoute.post('/', reservationPostController)
+reservationRoute.post('/',sanitizeReservation ,reservationPostController)
 
 //#3 PUT
 // Update one reservation data

@@ -1,9 +1,10 @@
 const express = require('express');
-const database = require('./connect')
-const cors = require('cors')
+const database = require('./connect');
+
+const cors = require('cors');
 
 //routes
-const reservationRoute = require('./routes/reservertion.routes')
+const reservationRoute = require('./routes/reservertion.routes');
 
 const app = express();
 

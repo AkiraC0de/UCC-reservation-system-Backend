@@ -32,36 +32,16 @@ const reservationGetController = async (req, res, next) => {
 
 const reservationPostController = async (req, res, next) => {
     const db = database.getDb();
+    const mongoObject = req.body; // must be santized by middleware
     
     try {
-        const dataNow = new Date().toISOString();
-        const user = req.body.user || {};
-
-        const mongoObject = {
-            roomId: req.body.roomId || "",
-            date: req.body.date || "",
-            startTime: req.body.startTime || "",
-            endTime: req.body.endTime || "",
-            status: req.body.status || "pending",
-            purpose: req.body.purpose || "",
-            user: {
-                userId: user.user_id || "",
-                firstname: user.firstname || "",
-                lastname: user.lastname || "",
-                program: user.program || "",
-                year: user.year || 1,
-                section: user.section || ""
-            },
-            createdAt: dataNow,
-            updateAt: dataNow,
-        };
-
         //const data = await db.collection('reservations').insertOne(mongoObject);
         res.status(201).json({
             success: true,
             message: `The Reservation ${req.params.id} has been created.`, 
             data: mongoObject
         })
+        console.log(mongoObject)
 
     } catch (error) {
         res.status(500).json({
