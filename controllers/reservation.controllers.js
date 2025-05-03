@@ -2,23 +2,33 @@ const database = require('../connect');
 
 const reservationGetController = async (req, res, next) => {
     const db = database.getDb();
+    const { limit } = req.query; //access queries
     
     try {
         const data = await db.collection('reservations').find({}).toArray();
-
         //Check if the reservation collection is empty before sending datas
         if(data.length === 0){
-            res.status(200).json({
+            return res.status(200).json({
                 success: true,
                 message: "Reservation has no content",
                 data: [],
             })
-        } else {
-            res.status(200).json({
+        }
+
+        //Check if the limit query is existed
+        if(limit){
+            const limitData = data.slice(0, limit)
+             return res.status(200).json({
                 success: true,
-                data: data,
+                data: limitData,
             })
         }
+
+        res.status(200).json({
+            success: true,
+            data: data,
+        })
+
     } catch (error) {
         res.status(500).json({
             success: false,

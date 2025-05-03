@@ -17,18 +17,15 @@ const reservationRoute = express.Router();
 // ask for all reservations data
 reservationRoute.get('/', reservationGetController);
 
-//#2 GET with limit query
-reservationRoute.get('/?limit', (req, res) => {console.log(req.query)})
-
-// #3 POST 
+// #2 POST 
 // post a new reservation 
 reservationRoute.post('/',sanitizeReservation ,reservationPostController);
 
-//#4 PUT
+//#3 PUT
 // Update one reservation data
 reservationRoute.put('/:id', sanitizeReservation, reservationPutController);
 
-//#5 DELETE
+//#4 DELETE
 // Delete reservation data
 reservationRoute.delete('/:id', reservationDeleteController)
 
