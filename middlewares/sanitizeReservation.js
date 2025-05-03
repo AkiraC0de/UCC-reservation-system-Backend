@@ -15,8 +15,8 @@ const sanitizeReservation = (req, res, next) => {
 
   data.user = data.user || {};
 
-  data.createdAt = String(data.createdAt).trim() || dateNow;
-  data.updatedAt = String(data.updatedAt).trim() || dateNow;
+  data.createdAt = data.createdAt && String(data.createdAt).trim() || dateNow;
+  data.updatedAt = data.updatedAt && String(data.updatedAt).trim() || dateNow;
   
   next();
 }
