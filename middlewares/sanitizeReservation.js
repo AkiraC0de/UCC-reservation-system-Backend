@@ -4,15 +4,15 @@ const sanitizeReservation = (req, res, next) => {
   const dateNow = new Date().toISOString();
 
   if(!data) {
-    return res.status(400).json({messaage: "Error: There are no data has been sent to server!"});
+    return res.status(400).json({success: false, messaage: "Error: There are no data has been sent to server!"});
   }
 
   if(!data.user){
-    return res.status(400).json({messaage: "Error: Failed to send the user data to the server"});
+    return res.status(400).json({success: false, messaage: "Error: Failed to send the user data to the server"});
   }
 
   if(!data.startTime || !data.endTime){
-    return res.status(400).json({messaage: "Error: Incomplete time data"});
+    return res.status(400).json({success: false, messaage: "Error: Incomplete time data"});
   }
 
   data.date = (data.date && String(data.date).trim()) || "";
