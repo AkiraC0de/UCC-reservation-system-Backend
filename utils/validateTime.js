@@ -2,7 +2,7 @@ const validateTimeFormat = (time) => {
     const hour = Number(time.toString().slice(0, 2));
     const min = time.toString().slice(3, 5);
 
-    const validateHour = hour > 0 && hour <= 24;
+    const validateHour = hour => 0 && hour <= 24;
     const validataMin = min === '30' || min === '00';
 
     return validataMin && validateHour
