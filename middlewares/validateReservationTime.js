@@ -1,9 +1,13 @@
+const { validateTimeFormat } = require('../utils/validateTimeFormat')
+
 const validateReservationTime = (req, res, next) => {
     const { startTime, endTime } = req.body;
 
-    //check the format of time
+    validateTimeFormat(startTime);
 
     const starHour = Number(startTime.slice(0,2));
+
+    next();
 }
 
 module.exports = { validateReservationTime }

@@ -9,7 +9,8 @@ const {
     reservationDeleteController 
 } = require('../controllers/reservation.controllers');
 
-const { sanitizeReservation } = require('../middlewares/sanitizeReservation')
+const { sanitizeReservation } = require('../middlewares/sanitizeReservation');
+const { validateReservationTime } = require('../middlewares/validateReservationTime') 
 
 const reservationRoute = express.Router();
 
@@ -19,11 +20,11 @@ reservationRoute.get('/', reservationGetController);
 
 // #2 POST 
 // post a new reservation 
-reservationRoute.post('/',sanitizeReservation ,reservationPostController);
+reservationRoute.post('/',sanitizeReservation, validateReservationTime ,reservationPostController);
 
 //#3 PUT
 // Update one reservation data
-reservationRoute.put('/:id', sanitizeReservation, reservationPutController);
+reservationRoute.put('/:id', sanitizeReservation, validateReservationTime, reservationPutController);
 
 //#4 DELETE
 // Delete reservation data
