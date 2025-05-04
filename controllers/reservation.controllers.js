@@ -48,15 +48,13 @@ const reservationPostController = async (req, res, next) => {
         //const data = await db.collection('reservations').insertOne(mongoObject);
         res.status(201).json({
             success: true,
-            message: `The Reservation ${req.params.id} has been created.`, 
+            message: `The Reservation has been created.`, 
             data: mongoObject
         })
-        console.log(mongoObject)
-
     } catch (error) {
         res.status(500).json({
             success: false,
-            message: `Server Error: Reservation ${req.params.id} cannot be sent.`
+            message: `Server Error: Reservation cannot be sent.`
         })
     }
 
