@@ -28,7 +28,8 @@ const reservationSchema = new mongoose.Schema({
     },
     purpose: String,
     reservedBy: {
-        type: String, // REQUIRE AN UPDATE: String For now since user model isnt established yet
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
         required: true,
     },
     createdAt: {
