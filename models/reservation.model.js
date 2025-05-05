@@ -39,5 +39,7 @@ const reservationSchema = new mongoose.Schema({
     updatedAt: {
         type: Date,
         default: Date.now
-      }
-})
+    }
+});
+
+const Reservation = mongoose.model('Reservation', reservationSchema);
