@@ -1,5 +1,5 @@
 const express = require('express');
-const database = require('./connect');
+const { connectToDatabase } = require('./connect');
 
 const cors = require('cors');
 
@@ -14,6 +14,6 @@ app.use(express.json());
 app.use('/api/reservations', reservationRoute);
 
 app.listen(process.env.PORT, () => {
-    database.connectToDatabase();
+    connectToDatabase();
     console.log('server is running at PORT: ', process.env.PORT)
 })

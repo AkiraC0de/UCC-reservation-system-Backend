@@ -1,26 +1,14 @@
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const mongoose = require('mongoose');
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(process.env.URI, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  }
-});
-
-let database;
+const connectToDatabase = async () => {
+    try {
+        await mongoose.connect(process.env.URI);
+        console.log('Succesfully connected to MongoDb - Database')
+    } catch (error) {
+        console.log(error.message)
+    }
+}
 
 module.exports = {
-    connectToDatabase: () => {
-        try {
-            database = client.db('ucc-reservation');
-            console.log(" You successfully connected to MongoDB!");
-        } catch (error) {
-            console.error("Error message: ", error.message);
-        }
-    },
-    getDb: () => {
-        return database
-    }
+    connectToDatabase
 }
