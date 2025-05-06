@@ -95,9 +95,11 @@ const reservationPutController = async (req, res) => {
 } 
 
 const reservationDeleteController = async (req, res) => {
-    const db = database.getDb();
+    // SHOULD BE UPDATE ONCE THE AUTH IS ESTABLISHED
+    // TO AVOID USER DELETE DATA FROM DATA BASE WITHOUT PROPER PERMISSION
+
     try {
-        const findData = await db.collection('reservations').findOne({_id: new ObjectId(req.params.id)});
+        const findData = await Reservation.findById(req.params.id);
 
         if(!findData){
             return res.status(404).json({
@@ -106,7 +108,7 @@ const reservationDeleteController = async (req, res) => {
             })
         }
 
-        const data = await db.collection("reservations").deleteOne({_id: new ObjectId(req.params.id)})
+        const data = await Reservation.deleteOne({_id: req.params.id});
         res.status(200).json({
             success: true,
             message: `The reservation ${req.params.id} has been deleted`,
