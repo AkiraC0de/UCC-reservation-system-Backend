@@ -62,10 +62,13 @@ const reservationPostController = async (req, res, next) => {
 }
 
 const reservationPutController = async (req, res) => {
-    const db = database.getDb();
-    
+    // Prevent modifying immutable data 
+    // _id updatedAt createdAt
+    const { _id, updatedAt, createdAt, ...safeBody } = req.body; 
+
     try {
-        const findData = await db.collection('reservations').findOne({_id: new ObjectId(req.params.id)});
+        //Look for the data if it was existed before updating it
+        const findData = await Reservation.findById(req.params.id);
 
         if(!findData) {
             return res.status(404).json({
@@ -74,30 +77,9 @@ const reservationPutController = async (req, res) => {
             })
         }
 
-        const dataNow = new Date().toISOString();
-        const user = req.body.user || {};
-
-        const mongoObject = {
-            $set: {
-                roomId: req.body.roomId || findData.roomId,
-                date: req.body.date || findData.date,
-                startTime: req.body.startTime || findData.startTime,
-                endTime: req.body.endTime || findData.endTime,
-                status: req.body.status || findData.status,
-                purpose: req.body.purpose || findData.purpose,
-                user: {
-                    userId: user.user_id || findData.user.userId,
-                    firstname: user.username || findData.user.firstname,
-                    lastname: user.lastname || findData.user.lastname,
-                    program: user.program || findData.user.program,
-                    year: user.year || findData.user.year,
-                    section: user.section || findData.user.section
-                },
-                updatedAt: dataNow
-            }
-        };
-
-        const data = await db.collection('reservations').updateOne({_id: new ObjectId(req.params.id)}, mongoObject);
+        //update the data
+        const data = await Reservation.updateOne({_id: req.params.id}, safeBody);
+       
         res.status(200).json({
             success: true,
             message: `The Reservation ${req.params.id} has been updated.`, 
@@ -108,7 +90,6 @@ const reservationPutController = async (req, res) => {
         res.status(500).json({
             success: false,
             message: `Server Error: Reservation ${req.params.id} cannot be updated.`,
-            data
         })
     }
 } 
@@ -122,14 +103,14 @@ const reservationDeleteController = async (req, res) => {
             return res.status(404).json({
                 success: false,
                 message: `The Reservation ${req.params.id} is not existed` 
-        })
+            })
         }
 
         const data = await db.collection("reservations").deleteOne({_id: new ObjectId(req.params.id)})
         res.status(200).json({
             success: true,
             message: `The reservation ${req.params.id} has been deleted`,
-            data
+            data: data
         })
     } catch (error) {
         res.status(500).json({message: `Server Error: Reservation ${req.params.id} cannot be deleted.`, data})
