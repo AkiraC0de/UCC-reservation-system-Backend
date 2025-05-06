@@ -1,4 +1,3 @@
-const database = require('../connect');
 const express = require('express');
 const ObjectId = require('mongodb').ObjectId;
 
@@ -9,7 +8,6 @@ const {
     reservationDeleteController 
 } = require('../controllers/reservation.controllers');
 
-const { sanitizeReservation } = require('../middlewares/sanitizeReservation');
 const { validateReservationTime } = require('../middlewares/validateReservationTime') 
 
 const reservationRoute = express.Router();

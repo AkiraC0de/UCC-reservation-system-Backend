@@ -1,12 +1,11 @@
 const Reservation = require('../models/reservation.model.js');
-const User = require('../models/user.model.js');
+const User = require('../models/user.model.js'); //SHOULD BE REMOVE ONCE AUTH ROUTES HAS BEEN ESTABLISHED
 
 const reservationGetController = async (req, res, next) => {
-    const db = database.getDb();
     const { limit } = req.query; //access queries
     
     try {
-        const data = await db.collection('reservations').find({}).toArray();
+        const data = await Reservation.find({});
         //Check if the reservation collection is empty before sending datas
         if(data.length === 0){
             return res.status(200).json({
@@ -42,8 +41,6 @@ const reservationGetController = async (req, res, next) => {
 }
 
 const reservationPostController = async (req, res, next) => {
-    const mongoObject = req.body; 
-    
     try {
         const newReservation =  await Reservation.create(req.body);
         
