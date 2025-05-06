@@ -20,11 +20,11 @@ reservationRoute.get('/', reservationGetController);
 
 // #2 POST 
 // post a new reservation 
-reservationRoute.post('/',reservationPostController);
+reservationRoute.post('/',validateReservationTime, reservationPostController);
 
 //#3 PUT
 // Update one reservation data
-reservationRoute.put('/:id', sanitizeReservation, validateReservationTime, reservationPutController);
+reservationRoute.put('/:id',validateReservationTime, reservationPutController);
 
 //#4 DELETE
 // Delete reservation data
