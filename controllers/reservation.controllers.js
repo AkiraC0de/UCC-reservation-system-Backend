@@ -1,4 +1,5 @@
-const database = require('../connect');
+const Reservation = require('../models/reservation.model.js');
+const User = require('../models/user.model.js');
 
 const reservationGetController = async (req, res, next) => {
     const db = database.getDb();
@@ -41,17 +42,18 @@ const reservationGetController = async (req, res, next) => {
 }
 
 const reservationPostController = async (req, res, next) => {
-    const db = database.getDb();
-    const mongoObject = req.body; // must be santized by middleware
+    const mongoObject = req.body; 
     
     try {
-        //const data = await db.collection('reservations').insertOne(mongoObject);
+        const newReservation =  await Reservation.create(req.body);
+        
         res.status(201).json({
             success: true,
             message: `The Reservation has been created.`, 
-            data: mongoObject
+            data: newReservation
         })
     } catch (error) {
+        console.log(error.message)
         res.status(500).json({
             success: false,
             message: `Server Error: Reservation cannot be sent.`

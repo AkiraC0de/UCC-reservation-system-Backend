@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const { validateTimeFormat } = require('../utils/validateTime')
 
 const reservationSchema = new mongoose.Schema({
+    //ROOM ID is needed
     date: {
         type: Date,
         required: true,
@@ -23,7 +24,8 @@ const reservationSchema = new mongoose.Schema({
         }
     },
     status: {
-        enums: ['pending', 'confirmed', 'cancelled'],
+        type: String,
+        enum: ['pending', 'confirmed', 'cancelled'],
         default: 'pending'
     },
     purpose: String,
@@ -44,3 +46,4 @@ const reservationSchema = new mongoose.Schema({
 });
 
 const Reservation = mongoose.model('Reservation', reservationSchema);
+module.exports = Reservation;

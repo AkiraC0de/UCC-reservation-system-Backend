@@ -20,7 +20,7 @@ reservationRoute.get('/', reservationGetController);
 
 // #2 POST 
 // post a new reservation 
-reservationRoute.post('/',sanitizeReservation, validateReservationTime ,reservationPostController);
+reservationRoute.post('/',reservationPostController);
 
 //#3 PUT
 // Update one reservation data

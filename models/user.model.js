@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema({
         default: Date.now,
         immutable: true,
     },
-    updatedupdatedAt: {
+    updatedAt: {
         type: Date,
         default: Date.now
     },
@@ -38,3 +38,4 @@ const userSchema = new mongoose.Schema({
 })
 
 const User = mongoose.model('User', userSchema);
+module.exports = User
