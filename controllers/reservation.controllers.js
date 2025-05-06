@@ -1,7 +1,7 @@
 const Reservation = require('../models/reservation.model.js');
 const User = require('../models/user.model.js'); //SHOULD BE REMOVE ONCE AUTH ROUTES HAS BEEN ESTABLISHED
 
-const reservationGetController = async (req, res, next) => {
+const reservationGetController = async (req, res) => {
     const { limit } = req.query; //access queries
     
     try {
@@ -35,12 +35,9 @@ const reservationGetController = async (req, res, next) => {
             message: 'Server error while fetching reservations'
         });
     }
-    
-    //proceed to next middleware
-    next();
 }
 
-const reservationPostController = async (req, res, next) => {
+const reservationPostController = async (req, res) => {
     try {
         const newReservation =  await Reservation.create(req.body);
         
@@ -56,9 +53,6 @@ const reservationPostController = async (req, res, next) => {
             message: `Server Error: Reservation cannot be sent.`
         })
     }
-
-    //Proceed to middleware
-    next();
 }
 
 const reservationPutController = async (req, res) => {
