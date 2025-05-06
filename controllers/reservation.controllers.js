@@ -112,7 +112,6 @@ const reservationDeleteController = async (req, res) => {
         res.status(200).json({
             success: true,
             message: `The reservation ${req.params.id} has been deleted`,
-            data: data
         })
     } catch (error) {
         res.status(500).json({message: `Server Error: Reservation ${req.params.id} cannot be deleted.`, data})
