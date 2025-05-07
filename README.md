@@ -39,4 +39,11 @@ Implement authentication to secure the system. This includes:
 - Using environment variables for secure development
 - Designing RESTful APIs
 
+## 🧩 What I’m Learning Next
+- Authentication using JSON Web Tokens (JWT)
+- Secure password management with bcrypt
+- Connecting and interacting with MongoDB via Mongoose
+- Middleware for route protection
+- Best practices for handling user data
+
 
