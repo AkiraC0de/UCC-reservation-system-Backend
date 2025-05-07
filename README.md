@@ -46,4 +46,12 @@ Implement authentication to secure the system. This includes:
 - Middleware for route protection
 - Best practices for handling user data
 
+# Reservation Endpoints
+
+| Method | Endpoint              | Description                           |
+| ------ | --------------------- | ------------------------------------- |
+| POST   | `/api/reservation`    | Add a new reservation                 |
+| PUT    | `/api/reservation/:id`| Update an existing reservation        |
+| GET    | `/api/reservation`    | Get all reservations info             |
+| DELETE | `/api/reservation/:id`| Delete an existing reservation(Admin) |
 
