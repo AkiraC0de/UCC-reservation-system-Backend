@@ -2,7 +2,7 @@
 
 This is the backend server for my first-year school project, **UCC Reservation System**. The system handles reservation functionalities for a university campus context and implements all HTTP methods (CRUD operations) using a RESTful API approach.
 
-This backend is a part of a full-stack web application and is my FIRST ATTEMPT at building a REST API using Node.js, Express, and MongoDB.
+This backend is a part of a full-stack web application and is my **FIRST ATTEMPT** at building a REST API using Node.js, Express, and MongoDB.
 
 ## 🚀 Project Goal
 
@@ -54,4 +54,14 @@ Implement authentication to secure the system. This includes:
 | PUT    | `/api/reservation/:id`| Update an existing reservation        |
 | GET    | `/api/reservation`    | Get all reservations info             |
 | DELETE | `/api/reservation/:id`| Delete an existing reservation(Admin) |
+
+
+# 🎯 GOAL Auth Endpoints
+The authentication system uses JWT (JSON Web Tokens) to securely manage user sessions. Below are the routes used for authentication:
+
+| Method | Endpoint             | Description                           |
+| ------ | -------------------- | ------------------------------------- |
+| POST   | `/api/auth/register` | Register a new user                   |
+| POST   | `/api/auth/login`    | Login and receive JWT token           |
+| GET    | `/api/auth/profile`  | Get logged-in user's info (Protected) |
 
