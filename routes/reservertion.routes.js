@@ -5,7 +5,7 @@ const {
     reservationPostController, 
     reservationPutController, 
     reservationDeleteController 
-} = require('../controllers/reservation.controllers');
+} = require('../controllers/reservation.controller');
 
 const { validateReservationTime } = require('../middlewares/validateReservationTime') 
 
