@@ -61,7 +61,7 @@ The authentication system uses JWT (JSON Web Tokens) to securely manage user ses
 
 | Method | Endpoint             | Description                           |
 | ------ | -------------------- | ------------------------------------- |
-| POST   | `/api/auth/register` | Register a new user                   |
+| POST   | `/api/auth/signup`   | Register a new user                   |
 | POST   | `/api/auth/login`    | Login and receive JWT token           |
 | GET    | `/api/auth/profile`  | Get logged-in user's info (Protected) |
 
