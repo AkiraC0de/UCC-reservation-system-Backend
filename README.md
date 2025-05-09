@@ -14,7 +14,9 @@ To develop a backend system that allows users to:
 - Handle full HTTP method operations (GET, POST, PUT/PATCH, DELETE)
 
 ## ✅ Goal Achieved 
-I’ve successfully learned how to build RESTful APIs using Node.js, Express, MongoDB, and Mongoose. The backend is now fully functional and supports all CRUD operations.
+- I’ve successfully learned how to build RESTful APIs using Node.js, Express, MongoDB, and Mongoose. The backend is now fully functional and supports all CRUD operations.
+- I’ve successfully learned and implemented authentication using JSON Web Tokens (JWT), secure password handling with bcrypt, and route protection through middleware. I also connected the backend to MongoDB using Mongoose and followed best practices for managing user data securely.
+
 
 ## 🎯 New Goal:
 Implement authentication to secure the system. This includes:
@@ -38,25 +40,27 @@ Implement authentication to secure the system. This includes:
 - Connecting and interacting with MongoDB via Mongoose
 - Using environment variables for secure development
 - Designing RESTful APIs
+- Implementing authentication with JSON Web Tokens (JWT)
+- Managing passwords securely using bcrypt
+- Connecting to and working with MongoDB using Mongoose
+- Protecting routes with middleware
+- Following best practices for handling and securing user data
 
-## 🧩 What I’m Learning Next
-- Authentication using JSON Web Tokens (JWT)
-- Secure password management with bcrypt
-- Connecting and interacting with MongoDB via Mongoose
-- Middleware for route protection
-- Best practices for handling user data
-
-# Reservation Endpoints
-
-| Method | Endpoint              | Description                           |
-| ------ | --------------------- | ------------------------------------- |
-| POST   | `/api/reservation`    | Add a new reservation                 |
-| PUT    | `/api/reservation/:id`| Update an existing reservation        |
-| GET    | `/api/reservation`    | Get all reservations info             |
-| DELETE | `/api/reservation/:id`| Delete an existing reservation(Admin) |
+## 🚧 What I’m Working On Next
+Now that authentication is in place, my next step is to refactor the reservation routes to ensure they are properly secured and aligned with role-based access control (e.g., admin privileges for deletion). The updated routes will enforce authentication and middleware-based protection.
 
 
-# 🎯 GOAL Auth Endpoints
+# GOAL Reservation Endpoints
+
+| Method | Endpoint               | Description                           |
+| ------ | ---------------------- | ------------------------------------- |
+| POST   | `/api/reservation`     | Add a new reservation (Auth required) |
+| PUT    | `/api/reservation/:id` | Update an existing reservation (Auth) |
+| GET    | `/api/reservation`     | Get all reservations (Auth required)  |
+| DELETE | `/api/reservation/:id` | Delete reservation (Admin only)       |
+
+
+# Auth Endpoints
 The authentication system uses JWT (JSON Web Tokens) to securely manage user sessions. Below are the routes used for authentication:
 
 | Method | Endpoint                | Description                                  |
