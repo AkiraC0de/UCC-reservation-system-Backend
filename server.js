@@ -2,6 +2,7 @@ const express = require('express');
 const { connectToDatabase } = require('./connect');
 
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 //routes
 const reservationRoute = require('./routes/reservertion.routes');
@@ -11,6 +12,7 @@ const app = express();
 
 app.use(cors({ credentials: true }));
 app.use(express.json());
+app.use(cookieParser());
 
 app.use('/api/reservations', reservationRoute);
 app.use('/api/auth', authRoute);
