@@ -59,9 +59,9 @@ Implement authentication to secure the system. This includes:
 # 🎯 GOAL Auth Endpoints
 The authentication system uses JWT (JSON Web Tokens) to securely manage user sessions. Below are the routes used for authentication:
 
-| Method | Endpoint             | Description                           |
-| ------ | -------------------- | ------------------------------------- |
-| POST   | `/api/auth/signup`   | Register a new user                   |
-| POST   | `/api/auth/login`    | Login and receive JWT token           |
-| GET    | `/api/auth/profile`  | Get logged-in user's info (Protected) |
+| Method | Endpoint                | Description                                  |
+| ------ | --------------------    | -------------------------------------------- |
+| POST   | `/api/auth/signup`      | Register a new user                          |
+| POST   | `/api/auth/login`       | Login and receive JWT token                  |
+| GET    | `/api/auth/reservations`| Get logged-in user's reservations(Protected) |
 
