@@ -3,8 +3,7 @@ const User = require('../models/user.model.js');
 
 const getUserReservations = async (req, res) => {
     const { limit } = req.query; //access queries;
-    const { id } = req.user; 
-    console.log(id)
+    const { id } = req.user;  
     
     try {
         const data = await User.findOne({_id: id}).populate('reservationsMade');
@@ -32,7 +31,7 @@ const getUserReservations = async (req, res) => {
     }
 }
 
-const reservationPostController = async (req, res) => {
+const reservationPostController = async (req, res) => { 
     try {
         const newReservation =  await Reservation.create(req.body);
         
@@ -50,14 +49,15 @@ const reservationPostController = async (req, res) => {
     }
 }
 
-const reservationPutController = async (req, res) => {
+const updateReservation = async (req, res) => {
     // Prevent modifying immutable data 
     // _id updatedAt createdAt
     const { _id, updatedAt, createdAt, ...safeBody } = req.body; 
+    const user = req.user;
 
     try {
         //Look for the data if it was existed before updating it
-        const findData = await Reservation.findById(req.params.id);
+        const findData = await Reservation.findById(user.id);
 
         if(!findData) {
             return res.status(404).json({
@@ -67,7 +67,7 @@ const reservationPutController = async (req, res) => {
         }
 
         //update the data
-        const data = await Reservation.updateOne({_id: req.params.id}, safeBody);
+        const data = await Reservation.updateOne({_id: user.id}, safeBody);
        
         res.status(200).json({
             success: true,
@@ -110,6 +110,6 @@ const reservationDeleteController = async (req, res) => {
 module.exports = { 
     getUserReservations, 
     reservationPostController, 
-    reservationPutController,
+    updateReservation,
     reservationDeleteController 
 };
