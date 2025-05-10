@@ -62,7 +62,15 @@ const updateReservation = async (req, res) => {
         if(!findData) {
             return res.status(404).json({
                 success: false,
-                message: `The Reservation ${req.params.id}} is not existed`
+                message: `The Reservation ${user.id}} is not existed`
+            })
+        }
+
+        // Validate if the user own this reservation before updating
+        if(findData.reservedBy !== user.id){
+            return res.status(403).json({
+                success: false,
+                message: `You are not Authorized to Update this reservation`
             })
         }
 
