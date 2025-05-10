@@ -40,10 +40,6 @@ const logIn = async (req, res) => {
     try {
         const {email, password} = req.body;
 
-        //Validate if the Email does exist
-        const user = await User.findOne({email});
-        if(!user) return res.status(404).json({success: false, message: "The email has not been registred"});
-
         //Validate the password
         const passwordMatched = await bcrypt.compare(password, user.password);
         if(!passwordMatched) return res.status(400).json({success: false, message: "Password is incorrect"});
