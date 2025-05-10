@@ -1,19 +1,20 @@
 const express = require('express');
 
 const { 
-    reservationGetController, 
+    getUserReservations, 
     reservationPostController, 
     reservationPutController, 
     reservationDeleteController 
 } = require('../controllers/reservation.controller');
+const verifyAuthJWT = require('../middlewares/verifyAuthJWT')
 
 const { validateReservationTime } = require('../middlewares/validateReservationTime') 
 
 const reservationRoute = express.Router();
 
 // #1 GET
-// ask for all reservations data
-reservationRoute.get('/', reservationGetController);
+// ask for all user reservations data
+reservationRoute.get('/', verifyAuthJWT, getUserReservations);
 
 // #2 POST 
 // post a new reservation 

@@ -1,23 +1,17 @@
 const Reservation = require('../models/reservation.model.js');
-const User = require('../models/user.model.js'); //SHOULD BE REMOVE ONCE AUTH ROUTES HAS BEEN ESTABLISHED
+const User = require('../models/user.model.js'); 
 
-const reservationGetController = async (req, res) => {
-    const { limit } = req.query; //access queries
+const getUserReservations = async (req, res) => {
+    const { limit } = req.query; //access queries;
+    const { id } = req.user; 
+    console.log(id)
     
     try {
-        const data = await Reservation.find({});
-        //Check if the reservation collection is empty before sending datas
-        if(data.length === 0){
-            return res.status(200).json({
-                success: true,
-                message: "Reservation has no content",
-                data: [],
-            })
-        }
+        const data = await User.findOne({_id: id}).populate('reservationsMade');
 
         //Check if the limit query is existed
         if(limit){
-            const limitData = data.slice(0, limit)
+            const limitData = data.reservationsMade.slice(0, limit)
              return res.status(200).json({
                 success: true,
                 data: limitData,
@@ -26,10 +20,11 @@ const reservationGetController = async (req, res) => {
 
         res.status(200).json({
             success: true,
-            data: data,
+            data: data.reservationsMade,
         })
 
     } catch (error) {
+        console.log(error.message)
         res.status(500).json({
             success: false,
             message: 'Server error while fetching reservations'
@@ -113,7 +108,7 @@ const reservationDeleteController = async (req, res) => {
 }
 
 module.exports = { 
-    reservationGetController, 
+    getUserReservations, 
     reservationPostController, 
     reservationPutController,
     reservationDeleteController 

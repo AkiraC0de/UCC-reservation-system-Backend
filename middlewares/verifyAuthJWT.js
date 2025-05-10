@@ -7,7 +7,7 @@ const verifyAuthJWT = async (req, res, next) => {
     if(!token) return res.status(400).json({success: false, message: "Invalid Token"});
     
     try {
-        const user = await jwt.verify(token, process.env.JWT_ACCESS_KEY);
+        const user = jwt.verify(token, process.env.JWT_ACCESS_KEY);
         req.user = user
         next();
     } catch (error) {
