@@ -57,7 +57,7 @@ const updateReservation = async (req, res) => {
 
     try {
         //Look for the data if it was existed before updating it
-        const findData = await Reservation.findById(user.id);
+        const findData = await Reservation.findById(req.params.id);
 
         if(!findData) {
             return res.status(404).json({
@@ -67,7 +67,10 @@ const updateReservation = async (req, res) => {
         }
 
         // Validate if the user own this reservation before updating
-        if(findData.reservedBy !== user.id){
+        const reservedById = String(findData.reservedBy);
+        const userId = String(user.id)
+
+        if(reservedById !== userId){
             return res.status(403).json({
                 success: false,
                 message: `You are not Authorized to Update this reservation`
@@ -75,7 +78,7 @@ const updateReservation = async (req, res) => {
         }
 
         //update the data
-        const data = await Reservation.updateOne({_id: user.id}, safeBody);
+        const data = await Reservation.updateOne({_id: req.params.id}, safeBody);
        
         res.status(200).json({
             success: true,
