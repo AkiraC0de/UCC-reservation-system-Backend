@@ -4,7 +4,7 @@ const {
     getUserReservations, 
     reservationPostController, 
     updateReservation, 
-    reservationDeleteController 
+    deleteReservation 
 } = require('../controllers/reservation.controller');
 const verifyAuthJWT = require('../middlewares/verifyAuthJWT')
 
@@ -26,6 +26,6 @@ reservationRoute.put('/:id', verifyAuthJWT, validateReservationTime, updateReser
 
 //#4 DELETE
 // Delete reservation data
-reservationRoute.delete('/:id', reservationDeleteController)
+reservationRoute.delete('/:id',verifyAuthJWT, deleteReservation)
 
 module.exports = reservationRoute;

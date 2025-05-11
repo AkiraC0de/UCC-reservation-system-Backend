@@ -94,17 +94,27 @@ const updateReservation = async (req, res) => {
     }
 } 
 
-const reservationDeleteController = async (req, res) => {
-    // SHOULD BE UPDATE ONCE THE AUTH IS ESTABLISHED
-    // TO AVOID USER DELETE DATA FROM DATA BASE WITHOUT PROPER PERMISSION
+const deleteReservation = async (req, res) => {
+    const user = req.user;
 
     try {
-        const findData = await Reservation.findById(req.params.id);
+        const reservation = await Reservation.findById(req.params.id);
 
-        if(!findData){
+        if(!reservation){
             return res.status(404).json({
                 success: false,
                 message: `The Reservation ${req.params.id} is not existed` 
+            })
+        }
+
+         // Validate if the user own this reservation before deleting
+        const reservedById = String(reservation.reservedBy);
+        const userId = String(user.id)
+
+        if(reservedById !== userId){
+            return res.status(403).json({
+                success: false,
+                message: `You are not Authorized to Delete this reservation`
             })
         }
 
@@ -114,7 +124,8 @@ const reservationDeleteController = async (req, res) => {
             message: `The reservation ${req.params.id} has been deleted`,
         })
     } catch (error) {
-        res.status(500).json({message: `Server Error: Reservation ${req.params.id} cannot be deleted.`, data})
+        console.log(error.message)
+        res.status(500).json({message: `Server Error: Reservation ${req.params.id} cannot be deleted.`})
     }
 }
 
@@ -122,5 +133,5 @@ module.exports = {
     getUserReservations, 
     reservationPostController, 
     updateReservation,
-    reservationDeleteController 
+    deleteReservation 
 };
