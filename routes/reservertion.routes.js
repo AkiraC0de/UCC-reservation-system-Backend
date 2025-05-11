@@ -2,7 +2,7 @@ const express = require('express');
 
 const { 
     getUserReservations, 
-    reservationPostController, 
+    addReservation, 
     updateReservation, 
     deleteReservation 
 } = require('../controllers/reservation.controller');
@@ -18,7 +18,7 @@ reservationRoute.get('/', verifyAuthJWT, getUserReservations);
 
 // #2 POST 
 // post a new reservation 
-reservationRoute.post('/',validateReservationTime, reservationPostController);
+reservationRoute.post('/',validateReservationTime, verifyAuthJWT, addReservation);
 
 //#3 PUT
 // Update one reservation data

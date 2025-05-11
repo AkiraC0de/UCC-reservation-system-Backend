@@ -31,9 +31,13 @@ const getUserReservations = async (req, res) => {
     }
 }
 
-const reservationPostController = async (req, res) => { 
+const addReservation = async (req, res) => { 
+    const user = req.user
     try {
-        const newReservation =  await Reservation.create(req.body);
+        //Should add validation if the reservation will hava a conflic to other reservations
+
+
+        const newReservation =  await Reservation.create({...req.body, reservedBy: user.id});
         
         res.status(201).json({
             success: true,
@@ -131,7 +135,7 @@ const deleteReservation = async (req, res) => {
 
 module.exports = { 
     getUserReservations, 
-    reservationPostController, 
+    addReservation, 
     updateReservation,
     deleteReservation 
 };
