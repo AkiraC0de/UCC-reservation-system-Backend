@@ -47,17 +47,17 @@ Implement authentication to secure the system. This includes:
 - Following best practices for handling and securing user data
 
 ## 🚧 What I’m Working On Next
-Now that authentication is in place, my next step is to refactor the reservation routes to ensure they are properly secured and aligned with role-based access control (e.g., admin privileges for deletion). The updated routes will enforce authentication and middleware-based protection.
+Now that authentication for reservation routes is in place, my next goal is to add User type. Where i will implement three users(Admin, Student, Faculty). This require to update all routes and JWT authenticaton code.
 
 
 # GOAL Reservation Endpoints
 
-| Method | Endpoint               | Description                           |
-| ------ | ---------------------- | ------------------------------------- |
-| POST   | `/api/reservation`     | Add a new reservation (Auth required) |
-| PUT    | `/api/reservation/:id` | Update an existing reservation (Auth) |
-| GET    | `/api/reservation`     | Get all reservations (Auth required)  |
-| DELETE | `/api/reservation/:id` | Delete reservation (Admin only)       |
+| Method | Endpoint               | Description                                   |
+| ------ | ---------------------- | --------------------------------------------- |
+| POST   | `/api/reservation`     | Add a new reservation (Auth required)         |
+| PUT    | `/api/reservation/:id` | Update an existing reservation (Auth)         |
+| GET    | `/api/reservation`     | Get all reservations of logged in user (Auth) |
+| DELETE | `/api/reservation/:id` | Delete reservation (Admin only)               |
 
 
 # Auth Endpoints
@@ -67,5 +67,4 @@ The authentication system uses JWT (JSON Web Tokens) to securely manage user ses
 | ------ | --------------------    | -------------------------------------------- |
 | POST   | `/api/auth/signup`      | Register a new user                          |
 | POST   | `/api/auth/login`       | Login and receive JWT token                  |
-| GET    | `/api/auth/reservations`| Get logged-in user's reservations(Protected) |
 
