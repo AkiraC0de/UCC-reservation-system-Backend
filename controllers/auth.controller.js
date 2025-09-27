@@ -42,16 +42,16 @@ const logIn = async (req, res) => {
 
         //Validate if the Email does exist
         const user = await User.findOne({email});
-        if(!user) return res.status(404).json({success: false, message: "The email has not been registred"});
+        if(!user) return res.status(404).json({success: false, errorAt: "email", message: "The email has not been registred"});
 
         //Validate the password
         const passwordMatched = await bcrypt.compare(password, user.password);
-        if(!passwordMatched) return res.status(400).json({success: false, message: "Password is incorrect"});
+        if(!passwordMatched) return res.status(400).json({success: false,  errorAt: "password", message: "Password is incorrect"});
 
         // Generate Access token
-        const accessToken = jwt.sign({id: user._id}, process.env.JWT_ACCESS_KEY, { expiresIn: '15m' });
+        const accessToken = jwt.sign({id: user._id}, process.env.JWT_ACCESS_KEY, { expiresIn: '7d' });
 
-        res.cookie('accessToken', accessToken, { httpOnly: true })
+        res.cookie('accessToken', accessToken, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 * 7, sameSite: 'Lax' })
 
         res.status(200).json({success:true, message: "Log in success", data: user})
 
@@ -68,9 +68,9 @@ const refresh = async (req, res) => {
 
     try {
         // Generate Access token
-        const accessToken = jwt.sign({id: user.id}, process.env.JWT_ACCESS_KEY, { expiresIn: '7d' });
+        const accessToken = jwt.sign({id: user.id}, process.env.JWT_ACCESS_KEY, { expiresIn: '15d' });
 
-        res.cookie('accessToken', accessToken, { httpOnly: true })
+        res.cookie('accessToken', accessToken, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 * 15 })
 
         res.status(200).json({success:true, message: "Log in success", data: user})
 
