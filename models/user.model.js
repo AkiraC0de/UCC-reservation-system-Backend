@@ -9,6 +9,18 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    program:{
+        type: String,
+        required: true
+    },
+    yearLevel:{
+        type: Number,
+        required: true
+    },
+    section:{
+        type: String,
+        required: true
+    },
     email: {
         type: String,
         required: true,
