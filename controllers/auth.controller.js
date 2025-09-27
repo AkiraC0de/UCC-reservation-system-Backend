@@ -62,17 +62,26 @@ const logIn = async (req, res) => {
 }
 
 const refresh = async (req, res) => {
-    const user = req.user
-    //Check if the request user has content
-    if(!user) return res.status(400).json({success: false, message: "The request user is empty"});
+    const {id} = req.user
 
     try {
+        // Find the user
+        const user = await User.findById(id)
+        // Extract user data for response
+        const {firstName, lastName, email, reservationsMade} = user
+        const userData = {
+            firstName,
+            lastName,
+            email,
+            reservationsMade,
+        }
+
         // Generate Access token
         const accessToken = jwt.sign({id: user.id}, process.env.JWT_ACCESS_KEY, { expiresIn: '15d' });
-
+        
         res.cookie('accessToken', accessToken, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 * 15 })
 
-        res.status(200).json({success:true, message: "Log in success", data: user})
+        res.status(200).json({success:true, message: "Log in success", data: userData})
 
     } catch (error) {
         console.log(error.message);
@@ -80,4 +89,14 @@ const refresh = async (req, res) => {
     }
 }
 
-module.exports = { signUp, logIn, refresh }
+const logOut = async (req, res) => {
+    res.cookie('accessToken', '', {
+        httpOnly: true,         
+        sameSite: 'Lax',           
+        expires: new Date(0)     
+    })
+
+    res.status(200).json({ success: true, message: "Logout Success"})
+}
+
+module.exports = { signUp, logIn, logOut, refresh }
