@@ -61,4 +61,23 @@ const logIn = async (req, res) => {
     }
 }
 
-module.exports = { signUp, logIn }
+const refresh = async (req, res) => {
+    const user = req.user
+    //Check if the request user has content
+    if(!user) return res.status(400).json({success: false, message: "The request user is empty"});
+
+    try {
+        // Generate Access token
+        const accessToken = jwt.sign({id: user.id}, process.env.JWT_ACCESS_KEY, { expiresIn: '7d' });
+
+        res.cookie('accessToken', accessToken, { httpOnly: true })
+
+        res.status(200).json({success:true, message: "Log in success", data: user})
+
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({success: false, message: error.message})
+    }
+}
+
+module.exports = { signUp, logIn, refresh }
