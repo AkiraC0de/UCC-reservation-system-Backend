@@ -7,28 +7,27 @@ const reservationSchema = new mongoose.Schema({
         type: Date,
         required: true,
     },
-    startTime: {
-        type: String,
+    startingTime: {
+        type: Number,
         required: true,
-        validate: {
-            validator: (value) => validateTimeFormat(value),
-            message: (props) => `${props.value} is not a valid time format. Expected format: HH:MM where MM can only be "00" or "30"`
-        }
     },
-    endTime:  {
-        type: String,
+    outTime:  {
+        type: Number,
         required: true,
-        validate: {
-            validator: (value) => validateTimeFormat(value),
-            message: (props) => `${props.value} is not a valid time format. Expected format: HH:MM where MM can only be "00" or "30"`
-        }
     },
     status: {
         type: String,
         enum: ['pending', 'confirmed', 'cancelled'],
         default: 'pending'
     },
-    purpose: String,
+    purpose: {
+        type: String,
+        required: true
+    },
+    weekDay: {
+        type: Number,
+        required: true
+    },
     reservedBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',

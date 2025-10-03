@@ -36,13 +36,15 @@ const addReservation = async (req, res) => {
     try {
         //Should add validation if the reservation will hava a conflic to other reservations
 
-
-        const newReservation =  await Reservation.create({...req.body, reservedBy: user.id});
+        const newReservation =  await Reservation.create({
+            ...req.body,
+            reservedBy: user.id
+        });
         
         res.status(201).json({
             success: true,
             message: `The Reservation has been created.`, 
-            data: newReservation
+            data: "newReservation"
         })
     } catch (error) {
         console.log(error.message)

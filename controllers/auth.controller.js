@@ -48,12 +48,21 @@ const logIn = async (req, res) => {
         const passwordMatched = await bcrypt.compare(password, user.password);
         if(!passwordMatched) return res.status(400).json({success: false,  errorAt: "password", message: "Password is incorrect"});
 
+        // Extract user data for response
+        const {firstName, lastName, reservationsMade} = user
+        const userData = {
+            firstName,
+            lastName,
+            email : user.email,
+            reservationsMade,
+        }
+
         // Generate Access token
         const accessToken = jwt.sign({id: user._id}, process.env.JWT_ACCESS_KEY, { expiresIn: '7d' });
 
         res.cookie('accessToken', accessToken, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 * 7, sameSite: 'Lax' })
 
-        res.status(200).json({success:true, message: "Log in success", data: user})
+        res.status(200).json({success:true, message: "Log in success", data: userData})
 
     } catch (error) {
         console.log(error.message);

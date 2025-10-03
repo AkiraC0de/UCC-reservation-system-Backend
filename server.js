@@ -14,7 +14,7 @@ app.use(cors({ credentials: true , origin: process.env.FRONTEND_ORIGIN}));
 app.use(express.json());
 app.use(cookieParser());
 
-app.use('/api/reservations', reservationRoute);
+app.use('/api/reservation', reservationRoute);
 app.use('/api/auth', authRoute);
 
 app.listen(process.env.PORT, () => {

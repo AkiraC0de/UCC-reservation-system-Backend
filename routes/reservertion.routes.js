@@ -18,7 +18,7 @@ reservationRoute.get('/', verifyAuthJWT, getUserReservations);
 
 // #2 POST 
 // post a new reservation 
-reservationRoute.post('/',validateReservationTime, verifyAuthJWT, addReservation);
+reservationRoute.post('/', verifyAuthJWT, addReservation);
 
 //#3 PUT
 // Update one reservation data
@@ -26,6 +26,6 @@ reservationRoute.put('/:id', verifyAuthJWT, validateReservationTime, updateReser
 
 //#4 DELETE
 // Delete reservation data
-reservationRoute.delete('/:id',verifyAuthJWT, deleteReservation)
+reservationRoute.delete('/:id', verifyAuthJWT, deleteReservation)
 
 module.exports = reservationRoute;
