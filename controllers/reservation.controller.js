@@ -8,7 +8,7 @@ const getUserReservations = async (req, res) => {
     const { id } = req.user;  
     
     try {
-        const data = await Reservation.find({ reservedBy: id }).populate('reservedBy');
+        const data = await Reservation.find({ reservedBy: id }).populate('reservedBy').sort({ createdAt: -1 });
         const filteredData = data.filter(item => item.reservedBy._id.equals(id));
 
   
@@ -42,7 +42,8 @@ const addReservation = async (req, res) => {
 
         const newReservation =  await Reservation.create({
             ...req.body,
-            reservedBy: user.id
+            reservedBy: user.id,
+            type: "Reserved"
         });
         
         res.status(201).json({

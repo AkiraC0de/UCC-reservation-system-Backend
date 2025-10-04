@@ -32,6 +32,11 @@ const reservationSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    type: {
+        type: String,
+        required: true,
+        default: 'Reserved'
+    },
     reservedBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
