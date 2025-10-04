@@ -189,6 +189,13 @@ const getRoomReservationsForNext7Days = async (req, res) => {
         .populate('reservedBy') // Populate the user details if needed
         .sort({ date: 1 }); // Sort by date and then starting time
 
+        // console.log(data)
+
+        const computedData = data.map(item => ({
+            ...item._doc,
+            hours: item.outTime - item.startingTime + 1
+        }))
+
         if (data.length === 0) {
             return res.status(404).json({
                 success: false,
@@ -198,8 +205,10 @@ const getRoomReservationsForNext7Days = async (req, res) => {
 
         res.status(200).json({
             success: true,
-            data: data,
+            data: computedData
         });
+
+       console.log(computedData)
 
     } catch (error) {
         console.error("Error fetching room reservations:", error.message);
