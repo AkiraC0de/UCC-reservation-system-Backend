@@ -3,8 +3,12 @@ const { validateTimeFormat } = require('../utils/validateTime')
 
 const reservationSchema = new mongoose.Schema({
     //ROOM ID is needed
+    roomId: {
+        type: String,
+        required: true,
+    },
     date: {
-        type: Date,
+        type: String,
         required: true,
     },
     startingTime: {
