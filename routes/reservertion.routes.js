@@ -5,7 +5,6 @@ const {
     addReservation, 
     updateReservation, 
     deleteReservation,
-    getRoomReservationsForNext7Days
 } = require('../controllers/reservation.controller');
 const verifyAuthJWT = require('../middlewares/verifyAuthJWT')
 

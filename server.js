@@ -8,6 +8,7 @@ const cookieParser = require('cookie-parser');
 const reservationRoute = require('./routes/reservertion.routes');
 const authRoute = require('./routes/auth.routes');
 const allReservationRoute = require('./routes/all-reservation.routes')
+const itemReservationRoute = require('./routes/item-reservation.routes')
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(cookieParser());
 app.use('/api/reservation', reservationRoute);
 app.use('/api/auth', authRoute);
 app.use('/api/all-reservation', allReservationRoute)
+app.use('/api/item-reservation', itemReservationRoute)
 
 app.listen(process.env.PORT, () => {
     connectToDatabase();

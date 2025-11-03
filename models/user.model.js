@@ -33,6 +33,17 @@ const userSchema = new mongoose.Schema({
         required: true,
         minlength: 8,
     },
+    role: {
+        type: String,
+        enum: ['admin', 'student', 'faculty'],
+        default: 'student',
+    },
+    isEmailVerified: {
+        type: Boolean,
+    },
+    verificationCode: {
+        type: Number,
+    },
     createdAt: {
         type: Date,
         default: Date.now,

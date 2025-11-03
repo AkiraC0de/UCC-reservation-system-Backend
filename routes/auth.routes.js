@@ -1,7 +1,7 @@
 const express = require('express');
 const verifyAuthJWT = require('../middlewares/verifyAuthJWT')
 
-const { signUp, logIn, logOut, refresh } = require('../controllers/auth.controller')
+const { signUp, logIn, logOut, refresh, verifyEmail, resendVerification } = require('../controllers/auth.controller')
 
 const authRoute = express.Router()
 
@@ -16,5 +16,9 @@ authRoute.post('/logout', logOut)
 
 //#4 Refresh Route
 authRoute.post('/refresh', verifyAuthJWT, refresh)
+
+//#4 Verify email Route
+authRoute.post('/verify', verifyEmail)
+authRoute.post('/resend-verification', resendVerification)
 
 module.exports = authRoute

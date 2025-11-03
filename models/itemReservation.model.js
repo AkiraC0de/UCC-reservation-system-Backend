@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 const { validateTimeFormat } = require('../utils/validateTime')
 
-const reservationSchema = new mongoose.Schema({
+const itemRervationSchema = new mongoose.Schema({
     //ROOM ID is needed
-    roomId: {
+    itemId: {
         type: String,
         required: true,
     },
@@ -40,5 +40,5 @@ const reservationSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
-const Reservation = mongoose.model('Reservation', reservationSchema);
-module.exports = Reservation;
+const ItemReservation = mongoose.model('ItemReservation', itemRervationSchema);
+module.exports = ItemReservation;
