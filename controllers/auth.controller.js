@@ -114,16 +114,17 @@ const logIn = async (req, res) => {
         if(!passwordMatched) return res.status(400).json({success: false,  errorAt: "password", message: "Password is incorrect"});
 
         // Extract user data for response
-        const {firstName, lastName, reservationsMade} = user
+        const {firstName, lastName, reservationsMade, role} = user
         const userData = {
             firstName,
             lastName,
+            role,
             email : user.email,
             reservationsMade,
         }
 
         // Generate Access token
-        const accessToken = jwt.sign({id: user._id}, process.env.JWT_ACCESS_KEY, { expiresIn: '7d' });
+        const accessToken = jwt.sign({id: user._id, role}, process.env.JWT_ACCESS_KEY, { expiresIn: '7d' });
 
         res.cookie('accessToken', accessToken, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 * 7, sameSite: 'Lax' })
 
@@ -146,13 +147,13 @@ const refresh = async (req, res) => {
         const userData = {
             firstName,
             lastName,
+            role,
             email,
-            role: role || "student",
             reservationsMade,
         }
 
         // Generate Access token
-        const accessToken = jwt.sign({id: user.id}, process.env.JWT_ACCESS_KEY, { expiresIn: '15d' });
+        const accessToken = jwt.sign({id: user.id, role}, process.env.JWT_ACCESS_KEY, { expiresIn: '15d' });
         
         res.cookie('accessToken', accessToken, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 * 15 })
 

@@ -38,6 +38,11 @@ const userSchema = new mongoose.Schema({
         enum: ['admin', 'student', 'faculty'],
         default: 'student',
     },
+    status: {
+        type: String,
+        enum: ['pending', 'verified'],
+        default: 'pending',
+    },
     isEmailVerified: {
         type: Boolean,
     },
