@@ -45,6 +45,12 @@ const addReservation = async (req, res) => {
             reservedBy: user.id,
             type: "Reserved"
         });
+
+        await User.findByIdAndUpdate(
+        user.id,
+        { $push: { reservationsMade: newReservation._id } },
+        { new: true }
+        );
         
         res.status(201).json({
             success: true,
@@ -385,6 +391,12 @@ const createReservation = async (req, res) => {
       type: type || 'Reserved',
       reservedBy: user.id
     })
+
+    await User.findByIdAndUpdate(
+        user.id,
+        { $push: { itemsReserved: newReservation._id } },
+        { new: true }
+    );
 
     await newReservation.save()
 

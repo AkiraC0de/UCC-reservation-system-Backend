@@ -19,7 +19,7 @@ const signUp = async (req, res) => {
 
   const { firstName, lastName, program, yearLevel, section, email, password, role } = req.body;
 
-  if (!firstName || !lastName || !program || !yearLevel || !section || !email || !password) {
+  if (!firstName || !lastName || !email || !password) {
     return res.status(400).json({
       success: false,
       message: "All fields are required.",

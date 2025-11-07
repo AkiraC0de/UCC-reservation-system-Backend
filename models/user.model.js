@@ -11,15 +11,12 @@ const userSchema = new mongoose.Schema({
     },
     program:{
         type: String,
-        required: true
     },
     yearLevel:{
         type: Number,
-        required: true
     },
     section:{
         type: String,
-        required: true
     },
     email: {
         type: String,
@@ -40,7 +37,7 @@ const userSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['pending', 'verified'],
+        enum: ['pending', 'verified', 'archived'],
         default: 'pending',
     },
     isEmailVerified: {
@@ -61,6 +58,11 @@ const userSchema = new mongoose.Schema({
     reservationsMade: {
         type: [mongoose.Schema.Types.ObjectId],
         ref: 'Reservation',
+        default: []
+    },
+    itemsReserved: {
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: 'ItemReservation',
         default: []
     }
 })
