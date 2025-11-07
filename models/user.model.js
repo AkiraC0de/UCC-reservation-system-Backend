@@ -30,6 +30,9 @@ const userSchema = new mongoose.Schema({
         required: true,
         minlength: 8,
     },
+    studentIdImage: {
+        type: String,
+    },
     role: {
         type: String,
         enum: ['admin', 'student', 'faculty'],
@@ -37,7 +40,7 @@ const userSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['pending', 'verified', 'archived'],
+        enum: ['pending', 'verified', 'rejected', 'archived'],
         default: 'pending',
     },
     isEmailVerified: {

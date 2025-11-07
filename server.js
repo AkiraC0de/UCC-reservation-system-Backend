@@ -13,6 +13,8 @@ const adminRoutes = require('./routes/admin.routes')
 
 const app = express();
 
+app.use("/uploads/users", express.static("uploads/users"));
+
 app.use(cors({ credentials: true , origin: process.env.FRONTEND_ORIGIN}));
 app.use(express.json());
 app.use(cookieParser());

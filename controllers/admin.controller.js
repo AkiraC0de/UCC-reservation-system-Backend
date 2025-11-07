@@ -1,6 +1,10 @@
 const bcrypt = require('bcryptjs');
 
 const User = require('../models/user.model');
+const Reservation = require('../models/reservation.model.js');
+const ItemReservation = require('../models/itemReservation.model.js')
+
+const sendRejectionEmail = require("../utils/sendRejectionEmail")
 
 const getUserList = async (req, res) => {
   const allUsers = await User.find({isEmailVerified: true})
@@ -96,4 +100,117 @@ const createUser = async (req, res) => {
   }
 }
 
-module.exports = {getUserList, updateUserData, createUser}
+const rejectUser = async (req, res) => {
+  const { _id, updatedAt, createdAt, ...safeBody } = req.body; 
+
+  //Look for the data if it was existed before updating it
+  const findData = await User.findById(req.params.id);
+
+  try {
+    if(!findData) {
+        return res.status(404).json({
+            success: false,
+            message: `The Reservation ${findData.id}} is not existed`
+        })
+    }
+
+    const data = await User.findOneAndUpdate({_id: req.params.id}, { status : "rejected" }, { new: true });
+
+    const usersFullName = `${data.firstName} ${data.lastName}`
+
+    await sendRejectionEmail(data.email, usersFullName, req.body.reason)
+        
+    res.status(200).json({
+        success: true,
+        message: `The User ${req.params.id} has been updated.`, 
+        data: data
+    })
+  } catch (error) {
+    res.status(500).json({
+        success: false,
+        message: error.message, 
+    })
+  }
+}
+
+/**
+ * Get ALL reservations (Rooms + Items) and return in unified format
+ * Example return:
+ * {
+ *   date: '2025-11-06',
+ *   type: 'Room',
+ *   room: 'Room 301',  // OR "LCD Projector", "Keyboard", etc.
+ *   purpose: 'Laboratory Activity',
+ *   startingTime: 9,
+ *   outTime: 12,
+ *   status: 'accepted',
+ *   reservedBy: 'Juan Dela Cruz'
+ * }
+ */
+const getReservationCalendar = async (req, res) => {
+  try {
+    
+    const roomReservations = await Reservation.find()
+      .populate("reservedBy", "firstName lastName").sort({ createdAt: -1 })
+      .lean();
+
+    const itemReservations = await ItemReservation.find()
+      .populate("reservedBy", "firstName lastName").sort({ createdAt: -1 })
+      .lean();
+
+    // 🔹 Format ROOM reservations
+    const formattedRooms = await Promise.all(
+      roomReservations.map(async (r) => {
+
+        return {
+          date: r.date,
+          type: "Room",
+          room:`Room ${r.roomId}`, // fallback
+          purpose: r.purpose,
+          startingTime: r.startingTime,
+          outTime: r.outTime,
+          status: r.status,
+          reservedBy: `${r.reservedBy.firstName} ${r.reservedBy.lastName}`,
+        };
+      })
+    );
+
+    // 🔹 Format ITEM reservations
+    const formattedItems = await Promise.all(
+      itemReservations.map(async (i) => {
+
+        return {
+          date: i.date,
+          type: "Item",
+          room: `Item ${i.itemId}`,
+          purpose: i.purpose,
+          startingTime: i.startingTime,
+          outTime: i.outTime,
+          status: i.status,
+          reservedBy: `${i.reservedBy.firstName} ${i.reservedBy.lastName}`,
+        };
+      })
+    );
+
+    const allReservations = [...formattedRooms, ...formattedItems].sort(
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
+
+
+    return res.status(200).json({
+      success: true,
+      total: allReservations.length,
+      data: allReservations,
+    });
+  } catch (error) {
+    console.error("GET RESERVATIONS ERROR:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Failed retrieving reservations",
+      error: error.message,
+    });
+  }
+};
+
+
+module.exports = {getUserList, updateUserData, createUser, rejectUser, getReservationCalendar}

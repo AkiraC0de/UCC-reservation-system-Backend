@@ -2,11 +2,12 @@ const express = require('express');
 const verifyAuthJWT = require('../middlewares/verifyAuthJWT')
 
 const { signUp, logIn, logOut, refresh, verifyEmail, resendVerification } = require('../controllers/auth.controller')
+const { uploadUserFile } = require('../configs/multer')
 
 const authRoute = express.Router()
 
 //#1 Sign Up Route
-authRoute.post('/signup', signUp)
+authRoute.post('/signup', uploadUserFile.single("studentId"), signUp)
 
 //#2 Login Route
 authRoute.post('/login', logIn)

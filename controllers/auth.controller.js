@@ -32,7 +32,7 @@ const signUp = async (req, res) => {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       // If email exists and is already verified, don't allow signup
-      if (existingUser.isEmailVerified) {
+      if (existingUser.status == "verified") {
         return res.status(409).json({
           success: false,
           message: "Email is already registered.",
@@ -69,6 +69,7 @@ const signUp = async (req, res) => {
       program,
       yearLevel,
       section,
+      studentIdImage: `/uploads/${req.file.filename}`,
       role,
       email: email.toLowerCase(),
       password: hashedPassword,
