@@ -163,6 +163,7 @@ const getReservationCalendar = async (req, res) => {
       roomReservations.map(async (r) => {
 
         return {
+          _id: r._id,
           date: r.date,
           type: "Room",
           room:`Room ${r.roomId}`, // fallback
@@ -180,6 +181,7 @@ const getReservationCalendar = async (req, res) => {
       itemReservations.map(async (i) => {
 
         return {
+          _id: i._id,
           date: i.date,
           type: "Item",
           room: `Item ${i.itemId}`,

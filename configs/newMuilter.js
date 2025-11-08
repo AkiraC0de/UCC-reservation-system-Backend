@@ -4,7 +4,7 @@ const path = require("path")
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "uploads/users/");  // folder where images will be stored
+    cb(null, "uploads/items/");  // folder where images will be stored
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
@@ -12,6 +12,7 @@ const storage = multer.diskStorage({
     cb(null, file.fieldname + "-" + uniqueSuffix + ext);
   }
 });
+
 
 function fileFilter(req, file, cb) {
   if (file.mimetype.startsWith("image/")) {
@@ -21,6 +22,6 @@ function fileFilter(req, file, cb) {
   }
 }
 
-const uploadUserFile = multer({ storage, fileFilter });
+const uploadItemFile = multer({ storage });
 
-module.exports = { uploadUserFile };
+module.exports = { uploadItemFile };

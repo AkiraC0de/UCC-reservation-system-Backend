@@ -110,6 +110,8 @@ const logIn = async (req, res) => {
         const user = await User.findOne({email});
         if(!user || !user.isEmailVerified) return res.status(404).json({success: false, errorAt: "email", message: "The email has not been registred"});
 
+        if(!user || user.status != "verified") return res.status(404).json({success: false, errorAt: "email", message: "The email has not yet have been verified. Please wait."});
+
         //Validate the password
         const passwordMatched = await bcrypt.compare(password, user.password);
         if(!passwordMatched) return res.status(400).json({success: false,  errorAt: "password", message: "Password is incorrect"});

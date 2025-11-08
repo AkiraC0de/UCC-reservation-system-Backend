@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const { validateTimeFormat } = require('../utils/validateTime')
 
 const itemRervationSchema = new mongoose.Schema({
-    //ROOM ID is needed
     itemId: {
         type: String,
         required: true,
