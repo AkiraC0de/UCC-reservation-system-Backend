@@ -1,4 +1,6 @@
 const Item = require("../models/item.model")
+const fs = require("fs");
+const path = require("path");
 
 const getAllItems = async (req, res) => {
     try {
@@ -17,6 +19,36 @@ const getAllItems = async (req, res) => {
         });
     }
 }
+
+const getOneItem = async (req, res) => {
+    const { id } = req.params;  
+
+    try {
+        console.log(id)
+        const item = await Item.findOne({_id: id});
+        if (!item) {
+            return res.status(404).json({
+                success: false,
+                message: "Item not found"
+            });
+        };
+
+        console.log(item)
+
+        res.status(200).json({
+            success: true,
+            data: item,
+        })
+
+    } catch (error) {
+        console.log(error.message)
+        res.status(500).json({
+            success: false,
+            message: 'Server error while fetching reservations'
+        });
+    }
+}
+
 
 const createNewItem = async (req, res) => {
   console.log("REQ BODY:", req.body);
@@ -95,4 +127,4 @@ const deleteItem = async (req, res) => {
     }
 }
 
-module.exports = { getAllItems, createNewItem, deleteItem }
+module.exports = { getAllItems, createNewItem, getOneItem, deleteItem }

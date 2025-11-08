@@ -3,7 +3,8 @@ const express = require('express');
 const { 
   getAllItems,
   createNewItem,
-  deleteItem
+  deleteItem,
+  getOneItem
  } = require('../controllers/Item.controller')
 const verifyAdminJWT = require('../middlewares/verifyAdminJWT')
 const { uploadItemFile } = require("../configs/newMuilter")
@@ -14,6 +15,8 @@ const itemRoutes = express.Router()
 itemRoutes.get('/', getAllItems)
 
 itemRoutes.post('/', verifyAdminJWT, uploadItemFile.single("Image"), createNewItem)
+
+itemRoutes.get('/oneItem/:id', getOneItem )
 
 itemRoutes.delete('/:id', verifyAdminJWT, deleteItem)
 

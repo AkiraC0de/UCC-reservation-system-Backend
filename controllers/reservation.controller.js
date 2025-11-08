@@ -365,7 +365,7 @@ const createReservation = async (req, res) => {
      const user = req.user;
   try {
     const {
-      itemId,
+      itemId, 
       date,
       startingTime,
       outTime,
@@ -418,7 +418,7 @@ const createReservation = async (req, res) => {
 const getAllReservations = async (req, res) => {
   try {
     const reservations = await ItemReservation.find()
-      .populate('reservedBy') // Optional: populate user info
+      .populate('reservedBy').populate('itemId') // Optional: populate user info
       .sort({ date: -1, startingTime: 1 }); // Optional: sort by most recent first
 
     if (!reservations || reservations.length === 0) {

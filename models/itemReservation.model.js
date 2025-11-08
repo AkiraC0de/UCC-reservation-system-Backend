@@ -3,7 +3,8 @@ const { validateTimeFormat } = require('../utils/validateTime')
 
 const itemRervationSchema = new mongoose.Schema({
     itemId: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Item',
         required: true,
     },
     date: {
